@@ -6,3 +6,4 @@ seaborn
 streamlit 
 pymupdf 
 nltk
+streamlit

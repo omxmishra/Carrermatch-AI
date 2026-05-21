@@ -8,8 +8,6 @@ from src.recommendation.recommender import (
     hybrid_recommend_jobs
 )
 
-
-# Load trained artifacts
 vectorizer = joblib.load(
     "models/vectorizer/tfidf_vectorizer.pkl"
 )
@@ -23,17 +21,13 @@ tech_jobs = joblib.load(
 )
 
 
-# Resume path
 resume_path = "data/resumes/sample_resume.pdf"
 
 
-# Extract resume text
 resume_text = extract_resume_text(
     resume_path
 )
 
-
-# Generate recommendations
 recommendations = hybrid_recommend_jobs(
     resume_text=resume_text,
     tech_jobs=tech_jobs,
@@ -44,8 +38,6 @@ recommendations = hybrid_recommend_jobs(
     top_n=5
 )
 
-
-# Display results
 print("\nTOP JOB RECOMMENDATIONS:\n")
 
 print(recommendations)

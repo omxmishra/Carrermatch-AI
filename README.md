@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CareerMatch AI 🚀
 
 An AI-powered resume-to-job recommendation system built with Python and Streamlit. Upload your resume and get the top matching roles ranked by skill overlap, TF-IDF similarity, and a hybrid final score.
@@ -256,4 +255,4 @@ Final-year CS student | AI/ML Portfolio
 - GitHub: [@omxmishra](https://github.com/omxmishra)
 - LinkedIn: [om--mishra](https://linkedin.com/in/om--mishra)
 - X: [@BuildWithOm](https://x.com/BuildWithOm)
->>>>>>> 719e190 (Update README)
+

@@ -1,4 +1,3 @@
-
 import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -10,7 +9,6 @@ from src.data_processing.skill_extractor import extract_skills
 from src.resume_parser.parser import extract_resume_text
 from src.recommendation.recommender import hybrid_recommend_jobs
 
-# ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="CareerMatch AI",
     page_icon="🚀",
@@ -18,22 +16,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ── Theme CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Lora:wght@500;600&display=swap');
-
-/* Palette
-   bg-base    : #141924
-   bg-card    : #1c2333
-   bg-lift    : #212a3e
-   accent     : #e8a838   (amber gold)
-   accent2    : #3ecf8e   (sage green)
-   text-hi    : #eef0f6
-   text-mid   : #8b93a7
-   text-lo    : #4f5669
-   border     : #2c3649
-*/
 
 html, body, [data-testid="stAppViewContainer"] {
     background: #141924 !important;
@@ -46,12 +31,41 @@ section[data-testid="stSidebar"] { display: none !important; }
 #MainMenu, footer { visibility: hidden; }
 
 .block-container {
-    padding: 56px 60px 80px !important;
+    padding: 0 60px 80px !important;
     max-width: 900px !important;
     margin: 0 auto;
 }
 
-/* ── File uploader ── */
+.hero {
+    text-align: center;
+    padding: 64px 0 48px;
+    border-bottom: 1px solid #2c3649;
+    margin-bottom: 40px;
+}
+.hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #e8a838;
+    margin-bottom: 16px;
+}
+.hero-title {
+    font-family: 'Lora', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: #eef0f6;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    line-height: 1.1;
+}
+.hero-sub {
+    font-size: 16px;
+    color: #8b93a7;
+    font-weight: 300;
+    margin: 0;
+}
+
 [data-testid="stFileUploader"] {
     background: #1c2333 !important;
     border: 1.5px dashed #2c3649 !important;
@@ -71,7 +85,6 @@ section[data-testid="stSidebar"] { display: none !important; }
 }
 [data-testid="stFileUploader"] button:hover { border-color: #e8a838 !important; color: #e8a838 !important; }
 
-/* ── Button ── */
 .stButton > button {
     background: #e8a838 !important;
     color: #141924 !important;
@@ -91,15 +104,12 @@ section[data-testid="stSidebar"] { display: none !important; }
     box-shadow: 0 4px 20px rgba(232,168,56,0.4) !important;
 }
 
-/* ── Success ── */
 [data-testid="stAlert"] {
     background: rgba(62,207,142,0.08) !important;
     border: 1px solid rgba(62,207,142,0.25) !important;
     border-radius: 10px !important;
     color: #3ecf8e !important;
 }
-
-/* ── Info box ── */
 [data-testid="stInfo"] {
     background: #1c2333 !important;
     border: 1px solid #2c3649 !important;
@@ -107,7 +117,6 @@ section[data-testid="stSidebar"] { display: none !important; }
     color: #8b93a7 !important;
 }
 
-/* ── Metrics ── */
 [data-testid="stMetric"] {
     background: #1c2333;
     border: 1px solid #2c3649;
@@ -128,7 +137,6 @@ section[data-testid="stSidebar"] { display: none !important; }
     color: #eef0f6 !important;
 }
 
-/* ── Expander (job card) ── */
 [data-testid="stExpander"] {
     background: #1c2333 !important;
     border: 1px solid #2c3649 !important;
@@ -151,7 +159,6 @@ section[data-testid="stSidebar"] { display: none !important; }
 [data-testid="stExpander"] summary:hover { color: #e8a838 !important; }
 details[data-testid="stExpander"] > div { padding: 4px 22px 20px !important; }
 
-/* ── Progress bar ── */
 .stProgress > div > div {
     background: linear-gradient(90deg, #e8a838, #f0b84a) !important;
     border-radius: 99px !important;
@@ -163,16 +170,10 @@ details[data-testid="stExpander"] > div { padding: 4px 22px 20px !important; }
     height: 6px !important;
 }
 
-/* ── Spinner ── */
 [data-testid="stSpinner"] p { color: #e8a838 !important; }
-
-/* ── Caption ── */
 .stCaption { color: #4f5669 !important; font-size: 12px !important; letter-spacing: 0.04em; }
-
-/* ── Divider ── */
 hr { border: none !important; border-top: 1px solid #2c3649 !important; margin: 28px 0 !important; }
 
-/* ── Code (skill chips) ── */
 code {
     background: #212a3e !important;
     color: #8b93a7 !important;
@@ -184,13 +185,11 @@ code {
     font-weight: 500 !important;
 }
 
-/* ── Column gaps ── */
 [data-testid="stHorizontalBlock"] { gap: 10px !important; }
 </style>
 """, unsafe_allow_html=True)
 
 
-# ── Load artifacts ────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_artifacts():
     vectorizer  = joblib.load("models/vectorizer/tfidf_vectorizer.pkl")
@@ -201,29 +200,18 @@ def load_artifacts():
 vectorizer, job_vectors, tech_jobs = load_artifacts()
 
 
-# ── Header ────────────────────────────────────────────────────────────────────
-st.markdown(
-    '<p style="font-size:11px;font-weight:700;letter-spacing:0.15em;'
-    'text-transform:uppercase;color:#4f5669;margin-bottom:8px;">AI Career Tool</p>',
-    unsafe_allow_html=True,
-)
-st.markdown(
-    '<h1 style="font-family:\'Lora\',serif;font-size:38px;font-weight:600;'
-    'color:#eef0f6;margin:0 0 10px;letter-spacing:-0.01em;">CareerMatch AI 🚀</h1>',
-    unsafe_allow_html=True,
-)
-st.markdown(
-    '<p style="font-size:15px;color:#8b93a7;margin:0 0 32px;font-weight:300;">'
-    'Upload your resume. Get the roles that actually fit your skills.</p>',
-    unsafe_allow_html=True,
-)
-st.divider()
+st.markdown("""
+<div class="hero">
+    <div class="hero-eyebrow">AI Career Tool</div>
+    <div class="hero-title">CareerMatch AI 🚀</div>
+    <p class="hero-sub">Upload your resume. Get the roles that actually fit your skills.</p>
+</div>
+""", unsafe_allow_html=True)
 
 
-# ── Upload ────────────────────────────────────────────────────────────────────
 st.markdown(
     '<p style="font-size:11px;font-weight:700;letter-spacing:0.12em;'
-    'text-transform:uppercase;color:#4f5669;margin-bottom:14px;">Step 1 — Your Resume</p>',
+    'text-transform:uppercase;color:#4f5669;margin-bottom:14px;">Your Resume</p>',
     unsafe_allow_html=True,
 )
 
@@ -259,11 +247,7 @@ if uploaded_file:
         st.success("✓  Recommendations ready — scroll down to review your matches.")
 
 
-# ── Results ───────────────────────────────────────────────────────────────────
 MEDAL = {1: "🥇", 2: "🥈", 3: "🥉", 4: "#4", 5: "#5"}
-
-# Score bar color: gold for top match, sage for rest
-BAR_COLOR = {1: "#e8a838", 2: "#3ecf8e", 3: "#3ecf8e", 4: "#3ecf8e", 5: "#3ecf8e"}
 
 if "recs" in st.session_state:
     df: pd.DataFrame = st.session_state["recs"]
@@ -309,19 +293,15 @@ if "recs" in st.session_state:
         header_label = f"{medal}  {title}  ·  {company}  ·  📍 {location}"
 
         with st.expander(header_label, expanded=(rank == 1)):
-
-            # 3-score row
             c1, c2, c3 = st.columns(3)
             c1.metric("Similarity", f"{sim:.1f}")
             c2.metric("Skill Overlap", f"{overlap} skills")
             c3.metric("Final Score", f"{final:.1f}")
 
-            # Match bar — labelled caption + progress
             bar_pct = min(1.0, final / 100)
             st.caption(f"Match strength  {final:.1f} / 100")
             st.progress(bar_pct)
 
-            # Skills
             if matched_list:
                 st.markdown(
                     '<p style="font-size:11px;font-weight:700;letter-spacing:0.1em;'

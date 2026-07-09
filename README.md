@@ -122,7 +122,7 @@ Each recommended job includes:
 ## Author
 
 **Om Mishra**
-Final-year CS student | AI/ML Portfolio
+Final-year CS student 
 
 - GitHub: [@omxmishra](https://github.com/omxmishra)
 - LinkedIn: [om--mishra](https://linkedin.com/in/om--mishra)

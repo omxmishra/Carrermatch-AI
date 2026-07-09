@@ -320,4 +320,4 @@ if "recs" in st.session_state:
 
 else:
     st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
-    st.info("📂  Uploa your resume and click **Find My Matches** to see your top job recommendations.")
+    st.info("📂  Upload your resume and click **Find My Matches** to see your top job recommendations.")
